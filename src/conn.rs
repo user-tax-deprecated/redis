@@ -2,13 +2,13 @@ use crate::def;
 use crate::Redis;
 
 use fred::{
-  interfaces::{ClientLike, KeysInterface},
+  interfaces::{ClientLike},
   prelude::{ReconnectPolicy, RedisClient, RedisConfig, ServerConfig},
 };
-use napi::bindgen_prelude::{External, Uint8Array};
+use napi::bindgen_prelude::{External};
 use napi_derive::napi;
 
-use crate::bin::Bin;
+
 
 #[napi]
 pub fn server_cluster(hosts: Vec<(String, u16)>) -> External<ServerConfig> {

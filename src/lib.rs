@@ -3,10 +3,10 @@ mod conn;
 mod r#macro;
 
 use fred::{
-  interfaces::{ClientLike, KeysInterface},
-  prelude::{ReconnectPolicy, RedisClient, RedisConfig, ServerConfig},
+  interfaces::{KeysInterface},
+  prelude::{RedisClient},
 };
-use napi::bindgen_prelude::{External, Uint8Array};
+use napi::bindgen_prelude::{Uint8Array};
 use napi_derive::napi;
 
 use crate::bin::Bin;
