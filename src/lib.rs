@@ -1,4 +1,5 @@
 mod bin;
+mod conn;
 mod r#macro;
 
 use fred::{

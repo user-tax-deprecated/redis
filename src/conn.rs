@@ -1,3 +1,6 @@
+use crate::def;
+use crate::Redis;
+
 use fred::{
   interfaces::{ClientLike, KeysInterface},
   prelude::{ReconnectPolicy, RedisClient, RedisConfig, ServerConfig},
