@@ -21,7 +21,7 @@ Redis :
   }
 
   get_b(&self, key:Bin) -> Option<Uint8Array> {
-      self.0.get::<Option<Vec<u8>>, _>(key).await?
+    self.0.get::<Option<Vec<u8>>, _>(key).await?
   }
 
   set(&self, key:Bin, val:Bin) -> (){
