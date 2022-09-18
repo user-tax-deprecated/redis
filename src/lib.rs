@@ -3,7 +3,7 @@ mod conn;
 mod r#macro;
 mod r#trait;
 
-use fred::{interfaces::KeysInterface, prelude::RedisClient};
+use fred::{interfaces::KeysInterface, prelude::RedisClient, types::Expiration};
 use napi::bindgen_prelude::Uint8Array;
 use napi_derive::napi;
 
@@ -14,7 +14,7 @@ pub struct Redis(RedisClient);
 
 napiImpl!(
 
-Redis :
+  Redis :
 
   get(&self, key:Bin) -> Option<String> {
     self.0.get::<Option<String>, _>(key).await?
@@ -29,6 +29,16 @@ Redis :
       key,
       val,
       None,
+      None,
+      false
+    ).await?
+  }
+
+  setex(&self, key:Bin, val:Bin, expire:u32) -> (){
+    self.0.set::<(),_,_>(
+      key,
+      val,
+      Some(Expiration::EX(expire as _)),
       None,
       false
     ).await?
