@@ -59,4 +59,13 @@ Redis :
     self.0.del::<u32,_>(key_li).await?
   }
 
+  exist(&self, key:Bin) -> bool {
+    self.0.exists::<u32,_>(key).await? == 1
+  }
+
+  mexist(&self, key:Vec<Bin>) -> u32 {
+    self.0.exists::<u32,_>(key).await?
+  }
+
+
 );
