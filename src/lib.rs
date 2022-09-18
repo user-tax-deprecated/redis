@@ -14,7 +14,7 @@ pub struct Redis(RedisClient);
 
 napiImpl!(
 
-  Redis :
+Redis :
 
   get(&self, key:Bin) -> Option<String> {
     self.0.get::<Option<String>, _>(key).await?
