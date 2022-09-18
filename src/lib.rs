@@ -34,13 +34,20 @@ napiImpl!(
     ).await?
   }
 
-  setex(&self, key:Bin, val:Bin, expire:u32) -> (){
+  setex(&self, key:Bin, val:Bin, seconds:i64) -> (){
     self.0.set::<(),_,_>(
       key,
       val,
-      Some(Expiration::EX(expire as _)),
+      Some(Expiration::EX(seconds)),
       None,
       false
+    ).await?
+  }
+
+  expire(&self, key:Bin, seconds:i64) -> bool {
+    self.0.expire::<bool,_>(
+      key,
+      seconds
     ).await?
   }
 

@@ -16,6 +16,7 @@ export class Redis {
   get(key: Bin): Promise<string | null>
   getB(key: Bin): Promise<Uint8Array | null>
   set(key: Bin, val: Bin): Promise<void>
+  setex(key: Bin, val: Bin, expire: number): Promise<void>
   del(key: Bin): Promise<boolean>
   mdel(keyLi: Array<Bin>): Promise<number>
 }
