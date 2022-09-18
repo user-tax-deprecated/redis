@@ -37,6 +37,9 @@ redis = await redisConn(
 )
 
 key = '123'
+
+console.log await redis.get key
+
 await redis.set key,'a'
 console.log await redis.get key
 console.log await redis.getB key
@@ -59,3 +62,7 @@ console.log await redis.getB key
 console.log await redis.mdel [key]
 console.log await redis.get key
 console.log await redis.getB key
+
+await redis.set key, '测试'
+await redis.expire key,6
+console.log await redis.get key
