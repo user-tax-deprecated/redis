@@ -16,16 +16,6 @@ macro_rules! def {
 }
 
 #[macro_export]
-macro_rules! OptionInto {
-  ($body:block) => {
-    Ok::<_, anyhow::Error>(match $body.await? {
-      Some(r) => Some(r.into()),
-      _ => None,
-    })
-  };
-}
-
-#[macro_export]
 macro_rules! napiImpl {
   (
     $cls:ty :
@@ -33,17 +23,17 @@ macro_rules! napiImpl {
       $fn:ident (&$($name:ident $(: $type:ty)? ),*) -> $result:ty $body:block
     )*
   )=>{
-#[napi]
+    #[napi]
     impl $cls {
       $(
         #[napi]
         pub async fn $fn(&$($name$(: $type )?,)*) -> napi::Result<$result> {
-          Ok({
+          Ok(
             async move {
-              Ok($body?.into())
+              Ok::<_,anyhow::Error>($body.to())
             }
-            .await as anyhow::Result<_, anyhow::Error>
-          }?)
+            .await?
+          )
         }
       )*
     }
