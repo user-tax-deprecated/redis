@@ -20,4 +20,6 @@ export class Redis {
   expire(key: Bin, seconds: number): Promise<boolean>
   del(key: Bin): Promise<boolean>
   mdel(keyLi: Array<Bin>): Promise<number>
+  exist(key: Bin): Promise<boolean>
+  mexist(key: Array<Bin>): Promise<number>
 }

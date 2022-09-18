@@ -38,6 +38,8 @@ redis = await redisConn(
 
 key = '123'
 
+console.log await redis.exist key
+console.log await redis.mexist [key,key]
 console.log await redis.get key
 
 await redis.set key,'a'
@@ -64,5 +66,5 @@ console.log await redis.get key
 console.log await redis.getB key
 
 await redis.set key, '测试'
-await redis.expire key,6
+await redis.expire key,16
 console.log await redis.get key
