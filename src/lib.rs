@@ -7,7 +7,7 @@ use fred::{interfaces::KeysInterface, prelude::RedisClient};
 use napi::bindgen_prelude::Uint8Array;
 use napi_derive::napi;
 
-use crate::bin::Bin;
+use crate::{bin::Bin, r#trait::To};
 
 #[napi]
 pub struct Redis(RedisClient);

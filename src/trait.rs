@@ -1,18 +1,20 @@
+use napi::bindgen_prelude::Uint8Array;
+
 pub trait To<T> {
   fn to(self) -> T;
 }
 
-impl<X, T: Into<X>> To<Option<X>> for Option<T> {
-  fn to(self) -> Option<X> {
+impl<X> To<X> for X {
+  fn to(self) -> X {
+    self
+  }
+}
+
+impl To<Option<Uint8Array>> for Option<Vec<u8>> {
+  fn to(self) -> Option<Uint8Array> {
     match self {
       Some(x) => Some(x.into()),
       None => None,
     }
-  }
-}
-
-impl<X, T: Into<X>> To<X> for T {
-  fn to(self) -> X {
-    self.to()
   }
 }
