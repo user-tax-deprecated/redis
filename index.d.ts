@@ -17,6 +17,7 @@ export class Redis {
   mdel(keyLi: Array<Bin>): Promise<number>
   exist(key: Bin): Promise<boolean>
   mexist(key: Array<Bin>): Promise<number>
+  hget(key: Bin, field: Bin): Promise<Uint8Array | null>
   hset(key: Bin, map: Record<string, Bin>): Promise<void>
   hincrby(key: Bin, field: Bin, increment: number): Promise<number>
   hincr(key: Bin, field: Bin): Promise<number>
