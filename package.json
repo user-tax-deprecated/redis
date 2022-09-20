@@ -16,7 +16,7 @@
       ]
     }
   },
-  "license": "MIT",
+  "license": "AGPL-3.0-or-later or Commercial",
   "devDependencies": {
     "@iuser/node-loader": "^0.0.21",
     "@napi-rs/cli": "^2.11.4",
