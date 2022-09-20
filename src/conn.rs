@@ -1,35 +1,36 @@
 use fred::{
   interfaces::ClientLike,
-  prelude::{ReconnectPolicy, RedisClient, RedisConfig, ServerConfig},
+  prelude::{ReconnectPolicy, RedisClient, RedisConfig, ServerConfig as Config},
 };
-use napi::bindgen_prelude::External;
 use napi_derive::napi;
 
 use crate::{def, Redis};
 
 #[napi]
-pub fn server_cluster(hosts: Vec<(String, u16)>) -> External<ServerConfig> {
-  ServerConfig::Clustered { hosts }.into()
+pub struct ServerConfig(Config);
+
+#[napi]
+pub fn server_cluster(hosts: Vec<(String, u16)>) -> ServerConfig {
+  ServerConfig(Config::Clustered { hosts }).into()
 }
 
 #[napi]
-pub fn server_host_port(host: String, port: u16) -> External<ServerConfig> {
-  ServerConfig::Centralized { host, port }.into()
+pub fn server_host_port(host: String, port: u16) -> ServerConfig {
+  ServerConfig(Config::Centralized { host, port }).into()
 }
 
 def!(redis_conn(
     version: u8,
-    server:External<ServerConfig>,
+    server:&ServerConfig,
     username:Option<String>,
     password:Option<String>,
     db:Option<u8>
 ) -> Redis {
-  let server = server.as_ref().clone();
   let mut config = RedisConfig::default();
   if version == 3 {
     config.version = fred::types::RespVersion::RESP3;
   }
-  config.server = server;
+  config.server = server.0.clone();
   config.database = db;
   config.password = password;
   config.username = username;

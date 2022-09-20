@@ -236,8 +236,9 @@ if (!nativeBinding) {
   throw new Error(`Failed to load native binding`)
 }
 
-const { serverCluster, serverHostPort, redisConn, Redis } = nativeBinding
+const { ServerConfig, serverCluster, serverHostPort, redisConn, Redis } = nativeBinding
 
+module.exports.ServerConfig = ServerConfig
 module.exports.serverCluster = serverCluster
 module.exports.serverHostPort = serverHostPort
 module.exports.redisConn = redisConn
