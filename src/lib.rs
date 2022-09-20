@@ -83,6 +83,10 @@ mexist(&self, key:Vec<Bin>) -> u32 {
   self.0.exists::<u32,_>(key).await?
 }
 
+hget(&self, key:Bin, field:Bin) -> Option<Uint8Array> {
+  self.0.hget::<Option<Vec<u8>>,_,_>(key, field).await?
+}
+
 hset(&self, key:Bin, map:HashMap::<String,Bin>) -> () {
   self.0.hset::<(),_,_>(key, map).await?
 }
