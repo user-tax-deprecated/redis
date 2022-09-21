@@ -91,6 +91,10 @@ hget_b(&self, key:Bin, field:Bin) -> Option<Uint8Array> {
   self.0.hget::<Option<Vec<u8>>,_,_>(key, field).await?
 }
 
+hget_i(&self, key:Bin, field:Bin) -> Option<i64> {
+  self.0.hget::<Option<i64>,_,_>(key, field).await?
+}
+
 hset(&self, key:Bin, map:HashMap::<String,Bin>) -> () {
   self.0.hset::<(),_,_>(key, map).await?
 }
