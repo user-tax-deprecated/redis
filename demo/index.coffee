@@ -73,6 +73,7 @@ console.log await redis.get key
 await redis.del key
 await redis.sadd key,['1','3']
 await redis.sadd key,'2'
+await redis.sadd key,'1'
 await redis.expire key,16
 
 ###
