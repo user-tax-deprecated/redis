@@ -72,12 +72,8 @@ expire(&self, key:Bin, seconds:i64) -> bool {
   ).await?
 }
 
-del(&self, key:Bin) -> bool {
-  self.0.del::<u32,_>(key).await? == 1
-}
-
-mdel(&self, key_li:Vec<Bin>) -> u32 {
-  self.0.del::<u32,_>(key_li).await?
+del(&self, key:BinMaybeVec) -> u32 {
+  self.0.del::<u32,_>(key).await?
 }
 
 exist(&self, key:BinMaybeVec) -> u32 {

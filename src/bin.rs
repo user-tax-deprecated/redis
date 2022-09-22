@@ -5,7 +5,7 @@ use fred::{
   types::{MultipleKeys, MultipleValues, RedisKey, RedisValue},
 };
 use napi::{
-  bindgen_prelude::{Buffer, FromNapiValue, TypeName, ValidateNapiValue, ValueType},
+  bindgen_prelude::{Buffer, FromNapiValue, TypeName, ValidateNapiValue},
   sys::{napi_env, napi_value},
   Either,
 };
