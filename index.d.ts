@@ -27,4 +27,5 @@ export class Redis {
   fstr(name: Bin, keys?: Array<Bin> | undefined | null, vals?: Array<Bin> | undefined | null): Promise<string>
   fi64(name: Bin, keys?: Array<Bin> | undefined | null, vals?: Array<Bin> | undefined | null): Promise<number>
   fcall(name: Bin, keys?: Array<Bin> | undefined | null, vals?: Array<Bin> | undefined | null): Promise<void>
+  fboolRo(name: Bin, keys?: Array<Bin> | undefined | null, vals?: Array<Bin> | undefined | null): Promise<boolean>
 }

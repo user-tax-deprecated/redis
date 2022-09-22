@@ -21,6 +21,15 @@ use crate::{
 #[napi]
 pub struct Redis(RedisClient);
 
+fn fcall_ro<T: Send + Unpin + FromRedis + 'static>(
+  redis: &Redis,
+  name: Bin,
+  keys: Option<Vec<Bin>>,
+  vals: Option<Vec<Bin>>,
+) -> AsyncResult<T> {
+  redis.0.fcall_ro::<T, _, _, _>(name, keys, vals)
+}
+
 fn fcall<T: Send + Unpin + FromRedis + 'static>(
   redis: &Redis,
   name: Bin,
@@ -29,9 +38,7 @@ fn fcall<T: Send + Unpin + FromRedis + 'static>(
 ) -> AsyncResult<T> {
   match keys {
     Some(keys) => redis.0.fcall::<T, _, _, _>(name, keys, vals),
-    None => redis
-      .0
-      .fcall_ro::<T, _, _, _>(name, Vec::<Bin>::new(), vals),
+    None => fcall_ro::<T>(redis, name, None, vals),
   }
 }
 
@@ -126,6 +133,10 @@ fi64(&self, name:Bin, keys:Option<Vec<Bin>>, vals:Option<Vec<Bin>>) -> i64 {
 
 fcall(&self, name:Bin, keys:Option<Vec<Bin>>, vals:Option<Vec<Bin>>) -> () {
   fcall::<()>(self,name,keys,vals).await?
+}
+
+fbool_ro(&self, name:Bin, keys:Option<Vec<Bin>>, vals:Option<Vec<Bin>>) -> bool {
+  fcall_ro::<bool>(self, name, keys, vals).await?
 }
 
 );
