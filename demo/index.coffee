@@ -36,10 +36,11 @@ redis = await redisConn(
   parseInt REDIS_DB
 )
 
-key = '123'
+key = 'test'
+await redis.del key
 
 console.log await redis.exist key
-console.log await redis.mexist [key,key]
+console.log await redis.exist [key,key]
 console.log await redis.get key
 
 await redis.set key,'a'
@@ -68,6 +69,11 @@ console.log await redis.getB key
 await redis.set key, '测试'
 await redis.expire key,16
 console.log await redis.get key
+
+await redis.del key
+await redis.sadd key,['1','3']
+await redis.sadd key,'2'
+await redis.expire key,16
 
 ###
 console.log await redis.fnload '''#!lua name=test
