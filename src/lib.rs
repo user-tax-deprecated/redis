@@ -29,14 +29,16 @@ fn fcall<T: Send + Unpin + FromRedis + 'static>(
 ) -> AsyncResult<T> {
   match keys {
     Some(keys) => redis.0.fcall::<T, _, _, _>(name, keys, vals),
-    None => redis.0.fcall_ro::<T, _, _, _>(name, keys, vals),
+    None => redis
+      .0
+      .fcall_ro::<T, _, _, _>(name, Vec::<Bin>::new(), vals),
   }
 }
 
 napiImpl!(Redis :
 
-get(&self, key:Bin) -> Option<String> {
-  self.0.get::<Option<String>, _>(key).await?
+  get(&self, key:Bin) -> Option<String> {
+    self.0.get::<Option<String>, _>(key).await?
 }
 
 get_b(&self, key:Bin) -> Option<Uint8Array> {

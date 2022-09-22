@@ -20,10 +20,20 @@ impl AsRef<[u8]> for Bin {
   }
 }
 
+impl IntoIterator for Bin {
+  type IntoIter = std::vec::IntoIter<Self::Item>;
+  type Item = RedisKey;
+
+  fn into_iter(self) -> Self::IntoIter {
+    vec![self.into()].into_iter()
+  }
+}
+
 impl TypeName for Bin {
   fn type_name() -> &'static str {
     "String/Buffer/Uint8Array"
   }
+
   fn value_type() -> napi::ValueType {
     StringOrBuffer::value_type()
   }
@@ -47,15 +57,15 @@ impl From<Bin> for RedisKey {
   }
 }
 
-impl From<Bin> for Str {
-  fn from(t: Bin) -> Str {
-    String::from_utf8_lossy(t.0.as_ref()).into()
-  }
-}
-
 impl From<Bin> for RedisValue {
   fn from(t: Bin) -> RedisValue {
     RedisValue::from(t.0.as_ref())
+  }
+}
+
+impl From<Bin> for Str {
+  fn from(t: Bin) -> Str {
+    String::from_utf8_lossy(t.0.as_ref()).into()
   }
 }
 
