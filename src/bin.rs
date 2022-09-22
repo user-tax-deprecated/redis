@@ -2,7 +2,7 @@ use std::iter::IntoIterator;
 
 use fred::{
   bytes_utils::Str,
-  types::{MultipleValues, RedisKey, RedisValue},
+  types::{MultipleKeys, MultipleValues, RedisKey, RedisValue},
 };
 use napi::{
   bindgen_prelude::{Buffer, FromNapiValue, TypeName, ValidateNapiValue, ValueType},
@@ -47,7 +47,7 @@ impl ValidateNapiValue for Bin {
 
 impl FromNapiValue for Bin {
   unsafe fn from_napi_value(env: napi_env, napi_val: napi_value) -> napi::Result<Self> {
-    Ok(Bin(StringOrBuffer::from_napi_value(env, napi_val)?))
+    Ok(Self(StringOrBuffer::from_napi_value(env, napi_val)?))
   }
 }
 
@@ -69,4 +69,30 @@ impl From<Bin> for Str {
   }
 }
 
-pub type BinMaybeVec = Either<Bin, Vec<Bin>>;
+pub type EitherBinVec = Either<Bin, Vec<Bin>>;
+
+pub struct BinMaybeVec(EitherBinVec);
+
+impl FromNapiValue for BinMaybeVec {
+  unsafe fn from_napi_value(env: napi_env, napi_val: napi_value) -> napi::Result<Self> {
+    Ok(Self(EitherBinVec::from_napi_value(env, napi_val)?))
+  }
+}
+
+impl From<BinMaybeVec> for MultipleKeys {
+  fn from(t: BinMaybeVec) -> Self {
+    match t.0 {
+      EitherBinVec::A(a) => a.into(),
+      EitherBinVec::B(b) => b.into(),
+    }
+  }
+}
+
+impl From<BinMaybeVec> for MultipleValues {
+  fn from(t: BinMaybeVec) -> Self {
+    match t.0 {
+      EitherBinVec::A(a) => a.into(),
+      EitherBinVec::B(b) => b.into_iter().into(),
+    }
+  }
+}

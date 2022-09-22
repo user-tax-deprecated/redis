@@ -84,7 +84,6 @@ exist(&self, key:BinMaybeVec) -> u32 {
   self.0.exists::<u32,_>(key).await?
 }
 
-
 hget(&self, key:Bin, field:Bin) -> Option<String> {
   self.0.hget::<Option<String>,_,_>(key, field).await?
 }
@@ -110,7 +109,7 @@ hincr(&self, key:Bin, field:Bin) -> i64 {
 }
 
 sadd(&self, key:Bin, members:BinMaybeVec) -> () {
-  self.0.sadd::<(),_,_>(key, members.into_iter()).await?
+  self.0.sadd::<(),_,_>(key, members).await?
 }
 
 fnload(&self, script:Bin) -> String {

@@ -15,15 +15,14 @@ export class Redis {
   expire(key: Bin, seconds: number): Promise<boolean>
   del(key: Bin): Promise<boolean>
   mdel(keyLi: Array<Bin>): Promise<number>
-  exist(key: Bin): Promise<boolean>
-  mexist(key: Array<Bin>): Promise<number>
+  exist(key: BinMaybeVec): Promise<number>
   hget(key: Bin, field: Bin): Promise<string | null>
   hgetB(key: Bin, field: Bin): Promise<Uint8Array | null>
   hgetI(key: Bin, field: Bin): Promise<number | null>
   hset(key: Bin, map: Record<string, Bin>): Promise<void>
   hincrby(key: Bin, field: Bin, increment: number): Promise<number>
   hincr(key: Bin, field: Bin): Promise<number>
-  sadd(key: Bin, members: Array<Bin>): Promise<void>
+  sadd(key: Bin, members: BinMaybeVec): Promise<void>
   fnload(script: Bin): Promise<string>
   fbin(name: Bin, keys?: Array<Bin> | undefined | null, vals?: Array<Bin> | undefined | null): Promise<Uint8Array>
   fstr(name: Bin, keys?: Array<Bin> | undefined | null, vals?: Array<Bin> | undefined | null): Promise<string>
