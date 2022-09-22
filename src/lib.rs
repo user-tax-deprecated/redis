@@ -6,7 +6,7 @@ mod r#trait;
 use std::collections::HashMap;
 
 use fred::{
-  interfaces::{FunctionInterface, HashesInterface, KeysInterface},
+  interfaces::{FunctionInterface, HashesInterface, KeysInterface, SetsInterface},
   prelude::{AsyncResult, RedisClient},
   types::{Expiration, FromRedis},
 };
@@ -105,6 +105,10 @@ hincrby(&self, key:Bin, field:Bin, increment:i64) -> i64 {
 
 hincr(&self, key:Bin, field:Bin) -> i64 {
   self.0.hincrby::<i64,_,_>(key, field, 1).await?
+}
+
+sadd(&self, key:Bin, members:Vec<Bin>) -> () {
+  self.0.sadd::<(),_,_>(key, members).await?
 }
 
 fnload(&self, script:Bin) -> String {
