@@ -13,7 +13,10 @@ use fred::{
 use napi::bindgen_prelude::Uint8Array;
 use napi_derive::napi;
 
-use crate::{bin::Bin, r#trait::To};
+use crate::{
+  bin::{Bin, BinMaybeVec},
+  r#trait::To,
+};
 
 #[napi]
 pub struct Redis(RedisClient);
@@ -107,7 +110,7 @@ hincr(&self, key:Bin, field:Bin) -> i64 {
   self.0.hincrby::<i64,_,_>(key, field, 1).await?
 }
 
-sadd(&self, key:Bin, members:Vec<Bin>) -> () {
+sadd(&self, key:Bin, members:BinMaybeVec) -> () {
   self.0.sadd::<(),_,_>(key, members).await?
 }
 

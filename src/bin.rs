@@ -1,12 +1,15 @@
+use std::iter::IntoIterator;
+
 use fred::{
   bytes_utils::Str,
-  types::{RedisKey, RedisValue},
+  types::{MultipleValues, RedisKey, RedisValue},
 };
 use napi::{
   bindgen_prelude::{Buffer, FromNapiValue},
   sys::{napi_env, napi_value},
   Either,
 };
+
 pub type StringOrBuffer = Either<String, Buffer>;
 
 pub struct Bin(StringOrBuffer);
@@ -40,3 +43,5 @@ impl From<Bin> for RedisValue {
     RedisValue::from(t.0.as_ref())
   }
 }
+
+pub type BinMaybeVec = Either<Bin, Vec<Bin>>;

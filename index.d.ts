@@ -23,6 +23,7 @@ export class Redis {
   hset(key: Bin, map: Record<string, Bin>): Promise<void>
   hincrby(key: Bin, field: Bin, increment: number): Promise<number>
   hincr(key: Bin, field: Bin): Promise<number>
+  sadd(key: Bin, members: Array<Bin>): Promise<void>
   fnload(script: Bin): Promise<string>
   fbin(name: Bin, keys?: Array<Bin> | undefined | null, vals?: Array<Bin> | undefined | null): Promise<Uint8Array>
   fstr(name: Bin, keys?: Array<Bin> | undefined | null, vals?: Array<Bin> | undefined | null): Promise<string>
