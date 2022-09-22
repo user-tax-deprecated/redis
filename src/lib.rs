@@ -37,8 +37,8 @@ fn fcall<T: Send + Unpin + FromRedis + 'static>(
 
 napiImpl!(Redis :
 
-  get(&self, key:Bin) -> Option<String> {
-    self.0.get::<Option<String>, _>(key).await?
+get(&self, key:Bin) -> Option<String> {
+  self.0.get::<Option<String>, _>(key).await?
 }
 
 get_b(&self, key:Bin) -> Option<Uint8Array> {
@@ -80,13 +80,10 @@ mdel(&self, key_li:Vec<Bin>) -> u32 {
   self.0.del::<u32,_>(key_li).await?
 }
 
-exist(&self, key:Bin) -> bool {
-  self.0.exists::<u32,_>(key).await? == 1
-}
-
-mexist(&self, key:Vec<Bin>) -> u32 {
+exist(&self, key:BinMaybeVec) -> u32 {
   self.0.exists::<u32,_>(key).await?
 }
+
 
 hget(&self, key:Bin, field:Bin) -> Option<String> {
   self.0.hget::<Option<String>,_,_>(key, field).await?
@@ -113,7 +110,7 @@ hincr(&self, key:Bin, field:Bin) -> i64 {
 }
 
 sadd(&self, key:Bin, members:BinMaybeVec) -> () {
-  self.0.sadd::<(),_,_>(key, members).await?
+  self.0.sadd::<(),_,_>(key, members.into_iter()).await?
 }
 
 fnload(&self, script:Bin) -> String {
