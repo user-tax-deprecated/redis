@@ -44,4 +44,28 @@ impl From<Bin> for RedisValue {
   }
 }
 
-pub type BinMaybeVec = Either<Bin, Vec<Bin>>;
+pub type EitherBinVec = Either<Bin, Vec<Bin>>;
+pub struct BinMaybeVec(EitherBinVec);
+
+impl FromNapiValue for BinMaybeVec {
+  unsafe fn from_napi_value(env: napi_env, napi_val: napi_value) -> napi::Result<Self> {
+    Ok(BinMaybeVec(EitherBinVec::from_napi_value(env, napi_val)?))
+  }
+}
+
+impl IntoIterator for BinMaybeVec {
+  type Item = Bin;
+  type IntoIter = std::vec::IntoIter<Self::Item>;
+  fn into_iter(self) -> Self::IntoIter {
+    self.0.into_iter()
+  }
+}
+
+impl From<BinMaybeVec> for RedisKey {
+  fn from(t: BinMaybeVec) -> RedisKey {
+    match t.0 {
+      EitherBinVec::A(a) => a.into(),
+      EitherBinVec::B(b) => b.into(),
+    }
+  }
+}
