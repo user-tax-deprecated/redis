@@ -71,16 +71,16 @@ impl From<Bin> for Str {
 
 pub type EitherBinVec = Either<Bin, Vec<Bin>>;
 
-pub struct BinMaybeVec(EitherBinVec);
+pub struct Bins(EitherBinVec);
 
-impl FromNapiValue for BinMaybeVec {
+impl FromNapiValue for Bins {
   unsafe fn from_napi_value(env: napi_env, napi_val: napi_value) -> napi::Result<Self> {
     Ok(Self(EitherBinVec::from_napi_value(env, napi_val)?))
   }
 }
 
-impl From<BinMaybeVec> for MultipleKeys {
-  fn from(t: BinMaybeVec) -> Self {
+impl From<Bins> for MultipleKeys {
+  fn from(t: Bins) -> Self {
     match t.0 {
       EitherBinVec::A(a) => a.into(),
       EitherBinVec::B(b) => b.into(),
@@ -88,8 +88,8 @@ impl From<BinMaybeVec> for MultipleKeys {
   }
 }
 
-impl From<BinMaybeVec> for MultipleValues {
-  fn from(t: BinMaybeVec) -> Self {
+impl From<Bins> for MultipleValues {
+  fn from(t: Bins) -> Self {
     match t.0 {
       EitherBinVec::A(a) => a.into(),
       EitherBinVec::B(b) => b.into_iter().into(),

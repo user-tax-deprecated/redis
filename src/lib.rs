@@ -14,7 +14,7 @@ use napi::bindgen_prelude::Uint8Array;
 use napi_derive::napi;
 
 use crate::{
-  bin::{Bin, BinMaybeVec},
+  bin::{Bin, Bins},
   r#trait::To,
 };
 
@@ -72,11 +72,11 @@ expire(&self, key:Bin, seconds:i64) -> bool {
   ).await?
 }
 
-del(&self, key:BinMaybeVec) -> u32 {
+del(&self, key:Bins) -> u32 {
   self.0.del::<u32,_>(key).await?
 }
 
-exist(&self, key:BinMaybeVec) -> u32 {
+exist(&self, key:Bins) -> u32 {
   self.0.exists::<u32,_>(key).await?
 }
 
@@ -104,7 +104,7 @@ hincr(&self, key:Bin, field:Bin) -> i64 {
   self.0.hincrby::<i64,_,_>(key, field, 1).await?
 }
 
-sadd(&self, key:Bin, members:BinMaybeVec) -> u32 {
+sadd(&self, key:Bin, members:Bins) -> u32 {
   self.0.sadd::<u32,_,_>(key, members).await?
 }
 
