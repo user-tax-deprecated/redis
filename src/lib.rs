@@ -111,6 +111,10 @@ hincr(&self, key:Bin, field:Bin) -> i64 {
   self.0.hincrby::<i64,_,_>(key, field, 1).await?
 }
 
+hexists(&self, key:Bin, field:Bin) -> bool {
+  self.0.hexists::<bool,_,_>(key, field).await?
+}
+
 sadd(&self, key:Bin, members:Bins) -> u32 {
   self.0.sadd::<u32,_,_>(key, members).await?
 }
