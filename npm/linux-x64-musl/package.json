@@ -1,0 +1,21 @@
+{
+  "name": "@user.tax/redis-linux-x64-musl",
+  "version": "0.0.2",
+  "os": [
+    "linux"
+  ],
+  "cpu": [
+    "x64"
+  ],
+  "main": "redis.linux-x64-musl.node",
+  "files": [
+    "redis.linux-x64-musl.node"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">= 10"
+  },
+  "libc": [
+    "musl"
+  ]
+}

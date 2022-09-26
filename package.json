@@ -1,0 +1,37 @@
+{
+  "name": "@user.tax/redis",
+  "version": "0.0.2",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "napi": {
+    "name": "redis",
+    "triples": {
+      "additional": [
+        "aarch64-apple-darwin",
+        "aarch64-linux-android",
+        "aarch64-unknown-linux-gnu",
+        "aarch64-unknown-linux-musl",
+        "aarch64-pc-windows-msvc",
+        "x86_64-unknown-linux-musl"
+      ]
+    }
+  },
+  "license": "(BUSL-1.1 OR SSPL-1.0)",
+  "devDependencies": {
+    "@iuser/node-loader": "^0.0.21",
+    "@napi-rs/cli": "^2.11.4",
+    "ava": "^4.3.3"
+  },
+  "engines": {
+    "node": ">= 10"
+  },
+  "scripts": {
+    "artifacts": "napi artifacts",
+    "build": "napi build --platform --release",
+    "build:debug": "napi build --platform",
+    "prepublishOnly": "napi prepublish -t npm",
+    "test": "ava",
+    "version": "napi version"
+  },
+  "packageManager": "yarn@3.2.3"
+}

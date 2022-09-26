@@ -1,0 +1,24 @@
+[package]
+edition = "2021"
+name = "redis"
+version = "0.0.0"
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+anyhow = "1.0.65"
+#fred = "5.2.0"
+fred = { path="../fred.rs" }
+napi = { path="../napi-rs/crates/napi", default-features = false, features = ["napi8","async","error_anyhow","tokio_net","tokio_rt"] }
+napi-derive = "2.9.1"
+#napi = { version = "2.9.1", default-features = false, features = ["napi8","async","error_anyhow","tokio_net","tokio_rt"] }
+#napi-sys = {version="2.2.2",features=["napi8"]}
+
+[build-dependencies]
+napi-build = "2.0.1"
+
+[profile.release]
+lto = true
+codegen-units = 1
+incremental = true
