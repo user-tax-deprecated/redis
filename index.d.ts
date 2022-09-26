@@ -24,6 +24,8 @@ export class Redis {
   hexist(key: Bin, field: Bin): Promise<boolean>
   sadd(key: Bin, members: Bins): Promise<number>
   zscore(key: Bin, member: Bin): Promise<number | null>
+  zincrby(key: Bin, member: Bin, increment: number): Promise<number>
+  zincr(key: Bin, member: Bin): Promise<number>
   fnload(script: Bin): Promise<string>
   fbin(name: Bin, keys?: Array<Bin> | undefined | null, vals?: Array<Bin> | undefined | null): Promise<Uint8Array>
   fstr(name: Bin, keys?: Array<Bin> | undefined | null, vals?: Array<Bin> | undefined | null): Promise<string | null>
