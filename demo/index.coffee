@@ -36,45 +36,50 @@ redis = await redisConn(
   parseInt REDIS_DB
 )
 
-key = 'test'
-await redis.del key
+loop
+  key = 'test'
+  await redis.del key
 
-console.log await redis.exist key
-console.log await redis.exist [key,key]
-console.log await redis.get key
+  console.log await redis.exist key
+  console.log await redis.exist [key,key]
+  console.log await redis.get key
 
-await redis.set key,'a'
-console.log await redis.get key
-console.log await redis.getB key
-console.log await redis.del key
-console.log await redis.get key
-console.log await redis.getB key
+  await redis.set key,'a'
+  console.log await redis.get key
+  console.log await redis.getB key
+  console.log await redis.del key
+  console.log await redis.get key
+  console.log await redis.getB key
 
-console.log '--'
-await redis.set key, new Uint8Array([97,98])
-console.log await redis.get key
-console.log await redis.getB key
-console.log await redis.del [key]
-console.log await redis.get key
-console.log await redis.getB key
+  console.log '--'
+  key = new Uint8Array([
+    68, 52, 166, 202,
+    97, 20, 194, 112
+  ])
+  await redis.set key, new Uint8Array([97,98])
+  console.log 'get',await redis.get key
+  console.log 'getB',await redis.getB key
+  console.log 'del',await redis.del [key]
+  console.log 'get',await redis.get key
+  console.log 'getB',await redis.getB key
 
-console.log '--'
-await redis.set key, Buffer.from([97,98])
-console.log await redis.get key
-console.log await redis.getB key
-console.log await redis.del [key]
-console.log await redis.get key
-console.log await redis.getB key
+  console.log '--'
+  await redis.set key, Buffer.from([97,98])
+  console.log 'get',await redis.get key
+  console.log 'getB',await redis.getB key
+  console.log 'del',await redis.del [key]
+  console.log 'get',await redis.get key
+  console.log 'getB',await redis.getB key
 
-await redis.set key, '测试'
-await redis.expire key,16
-console.log await redis.get key
+  await redis.set key, '测试'
+  await redis.expire key,16
+  console.log 'get',await redis.get key
 
-await redis.del key
-console.log await redis.sadd key,['1','3']
-console.log await redis.sadd key,'2'
-console.log await redis.sadd key,'1'
-await redis.expire key,16
+  await redis.del key
+  console.log 'sadd',await redis.sadd key,['1','3']
+  console.log 'sadd',await redis.sadd key,'2'
+  console.log 'sadd',await redis.sadd key,'1'
+  await redis.expire key,16
 
 ###
 console.log await redis.fnload '''#!lua name=test
